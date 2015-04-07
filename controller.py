@@ -13,8 +13,8 @@ filename = sys.argv[1]
 downsample = 1
 samplerate = 44100 / downsample
 if len( sys.argv ) > 2: samplerate = int(sys.argv[2])
-win_s = 1024 / downsample # fft size 4096
-hop_s = 100 / downsample # hop size 512
+win_s = (1024*4) / downsample # fft size 4096
+hop_s = 512 / downsample # hop size 512
 
 def subproc(cmd):
     #string = subprocess.getoutput(cmd, shell=True).decode("utf-8").strip()
@@ -24,7 +24,8 @@ def subproc(cmd):
 # Lets get some details on the .wav file
 seconds = float(subproc("sox --i -D tones.wav "))
 nsamples = int(subproc("sox --i -s tones.wav"))
-print("seconds:'{}' samples:'{}'".format(seconds, nsamples))
+secondspersample = seconds/nsamples
+print("seconds:'{}' samples:'{}' secondspersample:{}".format(seconds, nsamples, secondspersample))
 
 # Pitch detection vars
 tolerance = 0.8
@@ -49,18 +50,25 @@ while True:
     oldpitch = -1
     print(startloop)
     while True:
-        elapsed = startloop-time.time()
+        # Read the samples
         samples, read = s()
         total_frames += read
+        # Work out the pitch
         pitch = pitch_o(samples)[0]
         pitch = int(round(pitch))
         if pitch != oldpitch:
-            pass
-        thetime=time.time() 
-        elapsed = thetime - startloop
-        print("pitch:{} time:{} elapsed:{} totalframes:{} ".format(pitch, thetime, elapsed, total_frames))
-        oldpitch = pitch
-        time.sleep(0.25)
+            print("=======pitch:{}".format(pitch))
+        oldpitch = pitch 
+        # Work out how much time should have passed
+        thetime = time.time() 
+        elapsed = thetime-startloop
+        targettime = total_frames*secondspersample
+        # And pause in order to kepp in sync
+        pause = targettime-elapsed
+        if pause > 0:
+            time.sleep(pause)
+        #print("pitch:{} time:{} elapsed:{} totalframes:{} ".format(pitch, thetime, elapsed, total_frames))
+        # Have we reached then end of the audio file
         if read < hop_s: break
     elapsed = time.time()-startloop
     print('FINISHED elapsed:{} nFrames:{}'.format(elapsed, total_frames))
