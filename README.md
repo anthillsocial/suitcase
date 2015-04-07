@@ -15,4 +15,17 @@ Follow these instructions for preparing an SD card, be carefull not to wipe your
 www.archlinuxarm.org/platforms/armv7/broadcom/raspberry-pi-2
 
 *Direct connection over ethernet*
+TODO
 
+*Install pyhton module: pyaudo*
+
+    pacman -S python-pip
+    pip install pyaudio --allow-external pyaudio --allow-unverified pyaudio
+    pacman -S python-numpy
+    pacman -S alsa-utils
+
+    ------------------
+    pacman -S aubio
+    pip install pysoundcard
+    sudo cp /usr/lib/python3.4/site-packages/pysoundcard.py /usr/lib/python2.7/site-packages/pysoundcard.py
+    pacman -S python2-cffi
