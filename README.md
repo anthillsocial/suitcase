@@ -10,6 +10,13 @@ All ordered from www.robotShop.com
 - 12V, 1.7A, 667oz-in NEMA-17 Bipolar Stepper Motor
 - 8mm Set Screw Hub
 
+## Wiring
+Diagram for connecting the DRV8825 Breakout Board to a RaspberryPi can be found at:
+https://www.pololu.com/product/2133
+
+The relevent diagram can be found in this repository named "wiring.png".
+
+
 ## Prepare the Raspberry Pi 2
 *SD card setup*
 Follow these instructions for preparing an SD card, be carefull not to wipe your own hard drive!:
@@ -75,6 +82,7 @@ such as auto-connecting to a wifi network so we can ssh in:
 	pacman -S git sox alsa-utils 
     pacman -S aubio python2-cffi python2-numpy
 	pacman -S python-cffi python-numpy
+	packer -S python2-raspberry-gpio
     pip install pysoundcard
     cp /usr/lib/python3.4/site-packages/pysoundcard.py /usr/lib/python2.7/site-packages/pysoundcard.py
 
