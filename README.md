@@ -1,5 +1,6 @@
 # suitcase
-Stepper motor controlled by audio frequency
+Stepper motor controlled by audio frequency using a RAspberry Pi. Created for Kypros Kypriano: www.electronicsunset.org
+Released under a GPL V2 Licence. 
 
 ## The hardware
 All ordered from www.robotShop.com
@@ -29,8 +30,12 @@ At the prompt:
     g. Then type: +100M | for the last sector.  
     h. Then t |
     i. Then c | set the first partition to type W95 FAT32 (LBA).
-    j. Type n, then p for primary, 2 for the second partition on the drive, and then press ENTER twice to accept the default first and last sector.
-    k. rite the partition table and exit by typing w.
+    j. Then n | 
+    k. TThen p | for primary
+    l. Then 2 | for the second partition on the drive, and then press 
+    m. ENTER | accept the default first 
+    n. ENTER | accept default last sector.
+    o. Then w | write the partition table and exit by typing w.
 
 Finally create and mount the filesystem:
 
@@ -49,20 +54,37 @@ Finally create and mount the filesystem:
     mv root/boot/* boot
     umount boot root
 
-## Prepare the software
+## Prep Arch linux on Raspberry Pi
+Once the sd card has been setup, then the system needs some tweeks so we can get going, 
+such as auto-connecting to a wifi network so we can ssh in:
+
+    pacman -Syu
+    pacman -S vim dialog wpa_supplicant
+    wifi-menu
+    netctl enable nameofwificonfig
+    reboot
+
+## We can now ssh into the Rpi
+
+	ssh root@192.168.1.82
+	password: root	
+
+## Now setup the software and all its dependencies
+
+	git clone https://github.com/anthillsocial/suitcase.git
+	pacman -S git sox alsa-utils 
+    pacman -S aubio python2-cffi python2-numpy
+	pacman -S python-cffi python-numpy
+    pip install pysoundcard
+    cp /usr/lib/python3.4/site-packages/pysoundcard.py /usr/lib/python2.7/site-packages/pysoundcard.py
+
+## And finally create a systemd service so it automatically starts on boot
+Paste the follwowing into /
+	
+
+# NOTES
+Attempted to use pyaudio but kept getting distorted audio.
 
     git clone http://people.csail.mit.edu/hubert/git/pyaudio.git
     pacman -S libportaudio0 libportaudio2 libportaudiocpp0 portaudio19-dev
 
-## Install python module: pyaudo
-
-    pacman -S python-pip
-    pip install pyaudio --allow-external pyaudio --allow-unverified pyaudio
-    pacman -S python-numpy
-    pacman -S alsa-utils
-
-## Install python module: pyaubio
-    pacman -S aubio
-    pip install pysoundcard
-    sudo cp /usr/lib/python3.4/site-packages/pysoundcard.py /usr/lib/python2.7/site-packages/pysoundcard.py
-    pacman -S python2-cffi
