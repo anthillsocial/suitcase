@@ -15,4 +15,10 @@ Follow these instructions for preparing an SD card, be carefull not to wipe your
 www.archlinuxarm.org/platforms/armv7/broadcom/raspberry-pi-2
 
 *Direct connection over ethernet*
+TODO
 
+## Prepare the software
+Install 
+
+    git clone http://people.csail.mit.edu/hubert/git/pyaudio.git
+    pacman -S libportaudio0 libportaudio2 libportaudiocpp0 portaudio19-dev
