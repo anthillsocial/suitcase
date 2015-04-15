@@ -14,8 +14,15 @@ All ordered from www.robotShop.com
 Diagram for connecting the DRV8825 Breakout Board to a RaspberryPi can be found at:
 https://www.pololu.com/product/2133
 
-The relevent diagram can be found in this repository named "wiring.png".
+An image of the wiring can be found at: "wiring.png".
 
+A GPIO Pin diagram can be found at:
+http://pi.gadgetoid.com/pinout
+
+The code uses the BCM numbering system where:
+motor_enable_pin = BCM4
+motor_direction_pin = BCM17
+motor_step_pin = BCM24
 
 ## Prepare the Raspberry Pi 2
 *SD card setup*
