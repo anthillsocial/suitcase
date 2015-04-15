@@ -18,7 +18,19 @@ www.archlinuxarm.org/platforms/armv7/broadcom/raspberry-pi-2
 TODO
 
 ## Prepare the software
-Install 
 
     git clone http://people.csail.mit.edu/hubert/git/pyaudio.git
     pacman -S libportaudio0 libportaudio2 libportaudiocpp0 portaudio19-dev
+
+## Install python module: pyaudo
+
+    pacman -S python-pip
+    pip install pyaudio --allow-external pyaudio --allow-unverified pyaudio
+    pacman -S python-numpy
+    pacman -S alsa-utils
+
+## Install python module: pyaubio
+    pacman -S aubio
+    pip install pysoundcard
+    sudo cp /usr/lib/python3.4/site-packages/pysoundcard.py /usr/lib/python2.7/site-packages/pysoundcard.py
+    pacman -S python2-cffi
