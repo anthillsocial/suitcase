@@ -1,6 +1,16 @@
-# suitcase
-Stepper motor controlled by audio frequency using a RAspberry Pi. Created for Kypros Kypriano: www.electronicsunset.org
-Released under a GPL V2 Licence. 
+# Suitcase
+Stepper motor controlled by audio frequency using a RAspberry Pi. 
+Created 2016 for Kypros Kyprianou: www.electronicsunset.org
+Released under a GPL Licence. 
+
+The code (in development):
+
+- Reads an audio file.
+- Splits the file into left and right channels.
+- Detects audio frequencies from the left channel.
+- Outputs stepper motor control messages depending on frequency.
+
+The project was designed to synchronise an audio track with movements of a stepper motor. 
 
 ## The hardware
 All ordered from www.robotShop.com
@@ -13,16 +23,15 @@ All ordered from www.robotShop.com
 ## Wiring
 Diagram for connecting the DRV8825 Breakout Board to a RaspberryPi can be found at:
 https://www.pololu.com/product/2133
-
-An image of the wiring can be found at: "wiring.png".
-
-A GPIO Pin diagram can be found at:
-http://pi.gadgetoid.com/pinout
+An image from this website is inluded in the repository "wiring.png".
 
 The code uses the BCM numbering system where:
 motor_enable_pin = BCM4
 motor_direction_pin = BCM17
 motor_step_pin = BCM24
+
+To help with identifying pins, a great GPIO Pin diagram can be found at:
+http://pi.gadgetoid.com/pinout
 
 ## Prepare the Raspberry Pi 2
 *SD card setup*
@@ -32,6 +41,7 @@ www.archlinuxarm.org/platforms/armv7/broadcom/raspberry-pi-2
 I used the follwowing commands on ARch Linux:
 
     fdisk /dev/mmcblk0
+
 
 At the prompt:
 
@@ -83,7 +93,7 @@ such as auto-connecting to a wifi network so we can ssh in:
 	ssh root@192.168.1.82
 	password: root	
 
-## Now setup the software and all its dependencies
+## And setup the software and all its dependencies
 
 	git clone https://github.com/anthillsocial/suitcase.git
 	pacman -S git sox alsa-utils 
@@ -94,7 +104,7 @@ such as auto-connecting to a wifi network so we can ssh in:
     cp /usr/lib/python3.4/site-packages/pysoundcard.py /usr/lib/python2.7/site-packages/pysoundcard.py
 
 ## And finally create a systemd service so it automatically starts on boot
-Paste the follwowing into /
+[TODO]
 	
 
 # NOTES
