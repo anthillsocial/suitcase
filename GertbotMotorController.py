@@ -19,12 +19,12 @@ class GertbotMotorController:
 
     def reverse(self):
         self.log('reverse')
-        self.write([0x08, 0x00, 0xFF, 0x03, 0xE8]) 
+        self.write([0x08, 0x00, 0xFF, 0xEc, 0x14]) 
         self.write([0x1C, 0x00])
 
     def forward(self):
         self.log('forward')
-        self.write([0x08, 0x00, 0x00, 0x03, 0xE8]) # reverse
+        self.write([0x08, 0x00, 0x00, 0x13, 0xEC]) # reverse
         self.write([0x1C, 0x00])
     
     def stop(self):
