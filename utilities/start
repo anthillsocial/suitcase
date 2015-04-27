@@ -1,2 +1,0 @@
-mount /dev/sda1 /root/usbstick
-/root/suitcase/suitcase /root/usbstick/cuckoo.wav

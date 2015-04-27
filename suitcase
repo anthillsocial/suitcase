@@ -1,6 +1,7 @@
 #!/usr/bin/python2
 from GertbotMotorController import *
 from PitchDetector import * 
+import time
 
 class Suitcase:
     
@@ -9,6 +10,7 @@ class Suitcase:
         self.mc = GertbotMotorController()
         # Reset the motor to the start position
         self.mc.reset()
+        time.sleep(2)
         # Pitch detection object: pass a callback function
         self.pd = PitchDetector(self.controls)
         self.lastcommand = ''

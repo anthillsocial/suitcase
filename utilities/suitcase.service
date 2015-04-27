@@ -1,0 +1,11 @@
+[Unit]
+Description=Sonic Bike
+
+[Service]
+ExecStart=/home/pi/suitcase/utilities/start
+ExecStop=/home/pi/suitcase/utilities/stop
+Type=idle
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
