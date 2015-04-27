@@ -26,6 +26,12 @@ class GertbotMotorController:
         self.log('reverse')
         self.write([0x08, 0x00, 0x00, 0x03, 0xE8]) # reverse
         self.write([0x1C, 0x00])
+    
+    def stop(self):
+        pass
+
+    def reset(self):
+        pass
 
     def write(self, binaryArray):
         start = 0xA0        

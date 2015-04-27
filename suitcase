@@ -2,36 +2,48 @@
 from GertbotMotorController import *
 from PitchDetector import * 
 
-# Callback function which is called whenever a new pitch is found 
-def setmotor(frequency, energy):
-    pitch = frequency
-    sens = 40 # sensitivity
-    if inrange(pitch, 400, sens): 
-        print('Forward: {}'.format(pitch))
-        mc.forward()  
-    if inrange(pitch, 500, sens): 
-        print('Backward: {}'.format(pitch))
-        mc.reverse()  
-    if inrange(pitch, 600, sens): 
-        print('Stop: {}'.format(pitch))
-    if inrange(pitch, 700, sens): 
-        print('Stop2: {}'.format(pitch))
-    if inrange(pitch, 1500, 500): 
-        print('set speed: {}'.format(pitch))
+class Suitcase:
+    
+    def __init__(self): 
+        # Motor control object
+        self.mc = GertbotMotorController()
+        # Pitch detection object: pass a callback function
+        self.pd = PitchDetector(self.controls)
+        self.lastcommand = ''
 
-# Is this pitch within a certain range
-def inrange(pitch, target, sens):
-    if pitch<=target+sens and pitch>=target-sens:return True
-    else: return False
+    # Callback function which is called whenever a new pitch is found 
+    def controls(self, frequency, energy):
+        pitch = round(frequency)
+        energy = round(energy)
+        sens = 30 # sensitivity
+        action = False
+        if self.inrange(pitch, 300, sens): action = 'forward'
+        elif self.inrange(pitch, 400, sens): action = 'reverse' 
+        elif self.inrange(pitch, 600, sens): action = 'stop'
+        elif self.inrange(pitch, 700, sens): action = 'reset'
+        #elif self.inrange(pitch, 800, sens): action = 'g'
+        #elif self.inrange(pitch, 900, sens): action = 'h'
+        if action and self.lastcommand != action:
+            print('pitch:{} energy:{} action:{} last:{}'.format(pitch, energy, action, self.lastcommand))
+            self.setmotor(action)
+        self.lastcommand = action
 
-# Grab output from the commandline
-def subproc(cmd):
-    string = subprocess.check_output(cmd, shell=True).strip()
-    return string
+    def setmotor(self, action):
+        if(action=='forward'): self.mc.forward()
+        if(action=='reverse'): self.mc.reverse()
+        if(action=='top'): self.mc.stop()
+        if(action=='reset'): self.mc.reset()
+        
+    # Is this pitch within a certain range
+    def inrange(self, pitch, target, sens):
+        if pitch<=target+sens and pitch>=target-sens:return True
+        else: return False
 
-# Motor control object
-mc = GertbotMotorController()
+    # Grab output from the commandline
+    def subproc(self, cmd):
+        string = subprocess.check_output(cmd, shell=True).strip()
+        return string
 
-# Pitch detection object: pass a callback function
-pd = PitchDetector(setmotor)
-
+if __name__ == "__main__": 
+    suitcase = Suitcase()
+ 
