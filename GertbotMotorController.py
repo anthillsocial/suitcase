@@ -33,7 +33,7 @@ class GertbotMotorController:
         self.write([0x1C, 0x00]) 
 
     def reset(self):
-        self.log('reverse')
+        self.log('reset')
         self.write([0x08, 0x00, 0xFF, 0xEC, 0x14]) 
         self.write([0x1C, 0x00])
 

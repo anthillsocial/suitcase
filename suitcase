@@ -1,20 +1,27 @@
 #!/usr/bin/python2
 from GertbotMotorController import *
 from PitchDetector import * 
-import time
+import sys, time, threading, termios, tty
 
 class Suitcase:
     
     def __init__(self): 
         # Motor control object
-        self.mc = GertbotMotorController()
-        # Reset the motor to the start position
-        self.mc.reset()
-        time.sleep(2)
+        threading.Thread(target=self.startmotor).start()
+        time.sleep(5)
         # Pitch detection object: pass a callback function
-        self.pd = PitchDetector(self.controls)
+        threading.Thread(target=self.startpitch).start()
+        # Wait for keyboard command
+        threading.Thread(target=self.startkeys).start()
+    
+    def startpitch(self):
         self.lastcommand = ''
+        self.pd = PitchDetector(self.controls)
 
+    def startmotor(self):
+        self.mc = GertbotMotorController()
+        self.mc.reset()
+        
     # Callback function which is called whenever a new pitch is found 
     def controls(self, frequency, energy):
         pitch = round(frequency)
@@ -37,16 +44,35 @@ class Suitcase:
         if(action=='reverse'): self.mc.reverse()
         if(action=='stop'): self.mc.stop()
         if(action=='reset'): self.mc.reset()
-        
+    
+    def startkeys(self):
+        print('Start keys')
+        while True:
+            char = self.getch()
+            if(char == "x"): self.setmotor('forward')
+            if(char == "z"): self.setmotor('reverse')
+            if(char == "c"): self.setmotor('stop')
+            if(char == "v"): self.setmotor('reset')
+            if(char == "q"): break
+            char = ""
+    
     # Is this pitch within a certain range
     def inrange(self, pitch, target, sens):
         if pitch<=target+sens and pitch>=target-sens:return True
         else: return False
     
     # Grab output from the commandline
-    def subproc(self, cmd):
-        string = subprocess.check_output(cmd, shell=True).strip()
-        return string
+    def getch(self):
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(sys.stdin.fileno())
+            ch = sys.stdin.read(1)
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        return ch
+
+
 
 if __name__ == "__main__": 
     suitcase = Suitcase()
