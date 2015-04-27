@@ -17,21 +17,25 @@ class GertbotMotorController:
         self.write([0x02, 0x00, 0x11])
         self.write([0x02, 0x00, 0x13])
 
-    def forward(self):
-        self.log('forward')
+    def reverse(self):
+        self.log('reverse')
         self.write([0x08, 0x00, 0xFF, 0x03, 0xE8]) 
         self.write([0x1C, 0x00])
 
-    def reverse(self):
-        self.log('reverse')
+    def forward(self):
+        self.log('forward')
         self.write([0x08, 0x00, 0x00, 0x03, 0xE8]) # reverse
         self.write([0x1C, 0x00])
     
     def stop(self):
-        pass
+        self.log('stop')
+        self.write([0x06, 0x00, 0x00]) # stop
+        self.write([0x1C, 0x00]) 
 
     def reset(self):
-        pass
+        self.log('reverse')
+        self.write([0x08, 0x00, 0xFF, 0xEC, 0x14]) 
+        self.write([0x1C, 0x00])
 
     def write(self, binaryArray):
         start = 0xA0        

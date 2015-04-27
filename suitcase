@@ -7,6 +7,8 @@ class Suitcase:
     def __init__(self): 
         # Motor control object
         self.mc = GertbotMotorController()
+        # Reset the motor to the start position
+        self.mc.reset()
         # Pitch detection object: pass a callback function
         self.pd = PitchDetector(self.controls)
         self.lastcommand = ''
@@ -31,14 +33,14 @@ class Suitcase:
     def setmotor(self, action):
         if(action=='forward'): self.mc.forward()
         if(action=='reverse'): self.mc.reverse()
-        if(action=='top'): self.mc.stop()
+        if(action=='stop'): self.mc.stop()
         if(action=='reset'): self.mc.reset()
         
     # Is this pitch within a certain range
     def inrange(self, pitch, target, sens):
         if pitch<=target+sens and pitch>=target-sens:return True
         else: return False
-
+    
     # Grab output from the commandline
     def subproc(self, cmd):
         string = subprocess.check_output(cmd, shell=True).strip()
