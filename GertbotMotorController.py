@@ -1,6 +1,6 @@
 import serial, time
 
-class MotorController:
+class GertbotMotorController:
     def  __init__(self): 
         usbport = '/dev/ttyAMA0'
         self.ser = serial.Serial(usbport, 57600, timeout=1) # 9600
@@ -34,7 +34,6 @@ class MotorController:
         binaryArray.append(end)
         command = self.to_binary_str(binaryArray) 
         self.ser.write(command)
-        self.log('write:{}'.format(command))
 
     def end(self):
         self.ser.close()
@@ -46,7 +45,7 @@ class MotorController:
         print(msg)
 
 if __name__ == "__main__": 
-    stepper = MotorController()
+    stepper = GertbotMotorController()
     stepper.forward()
     time.sleep(1)
     stepper.reverse()

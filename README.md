@@ -33,7 +33,11 @@ motor_step_pin = BCM24
 To help with identifying pins, a great GPIO Pin diagram can be found at:
 http://pi.gadgetoid.com/pinout
 
-## Prepare the Raspberry Pi 2
+## Prepare the Raspberry Pi 2 On Rapbian Wheezy
+Follow audio setup istructions here:
+https://sites.google.com/site/observing/Home/speech-recognition-with-the-raspberry-pi
+
+## Prepare the Raspberry Pi 2 On ARch Linux
 *SD card setup*
 Follow these instructions for preparing an SD card, be carefull not to wipe your own hard drive!:
 www.archlinuxarm.org/platforms/armv7/broadcom/raspberry-pi-2
