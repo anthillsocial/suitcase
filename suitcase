@@ -12,7 +12,7 @@ class Suitcase:
         # Pitch detection object: pass a callback function
         threading.Thread(target=self.startpitch).start()
         # Wait for keyboard command
-        threading.Thread(target=self.startkeys).start()
+        #threading.Thread(target=self.startkeys).start()
     
     def startpitch(self):
         self.lastcommand = ''
