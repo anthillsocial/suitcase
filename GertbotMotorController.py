@@ -52,7 +52,8 @@ class GertbotMotorController:
         return ''.join(chr(b) for b in array)
 
     def log(self, msg):
-        print(msg)
+        #print(msg)
+        pass
 
 if __name__ == "__main__": 
     stepper = GertbotMotorController()

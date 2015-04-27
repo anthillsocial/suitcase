@@ -26,6 +26,8 @@ class Suitcase:
     def controls(self, frequency, energy):
         pitch = round(frequency)
         energy = round(energy)
+        if energy <= 200:
+            return
         sens = 30 # sensitivity
         action = False
         if self.inrange(pitch, 300, sens): action = 'forward'
@@ -35,7 +37,7 @@ class Suitcase:
         #elif self.inrange(pitch, 800, sens): action = 'g'
         #elif self.inrange(pitch, 900, sens): action = 'h'
         if action and self.lastcommand != action:
-            print('pitch:{} energy:{} action:{} last:{}\n'.format(pitch, energy, action, self.lastcommand))
+            print('{} | pitch:{} energy:{} action:{} last:{}\n'.format(action, pitch, energy, action, self.lastcommand))
             self.setmotor(action)
         self.lastcommand = action
 
