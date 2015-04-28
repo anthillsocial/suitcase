@@ -1,7 +1,7 @@
 # Suitcase
 Stepper motor controlled by audio frequency using a RAspberry Pi. 
 Created 2016 for Kypros Kyprianou: www.electronicsunset.org
-Released under a GPL Licence. 
+Released under a GPL Licence unless otherwise stated. 
 
 The code (in development):
 
