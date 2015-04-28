@@ -3,12 +3,12 @@ import serial, time
 class GertbotMotorController:
     def  __init__(self): 
         usbport = '/dev/ttyAMA0'
-        self.ser = serial.Serial(usbport, 57600, timeout=1) # 9600
+        self.ser = serial.Serial(usbport, 57600, timeout=1) 
         self.init_stepper()
 
     def init_stepper(self):
         self.log('Initi stepper')
-        # mSet mode to "Styep Gret Off"
+        # mSet mode to "Step Grey Off"
         self.write([0x01, 0x00, 0x08])
         self.write([0x09, 0x00, 0x00, 0x64, 0x00])
         # Set frequency to 1000
